@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MapComponent from './components/MapComponent';
 import GlassCard from './components/GlassCard';
-import { Shield, Navigation, AlertTriangle, PhoneCall, MapPin, Ambulance } from 'lucide-react';
+import { Shield, Navigation, AlertTriangle, PhoneCall, Ambulance } from 'lucide-react';
 import { useWebSocket } from './hooks/useWebSocket';
 
 function App() {
   const [emergencyStatus, setEmergencyStatus] = useState<'LIVE' | 'ALERT'>('LIVE');
-  const { lastMessage } = useWebSocket('ws://localhost:8000/ws/alerts');
+  const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/alerts';
+  const { lastMessage } = useWebSocket(wsUrl);
   const [currentAlert, setCurrentAlert] = useState<string>("Waiting for AI analysis...");
 
   useEffect(() => {
@@ -22,10 +23,11 @@ function App() {
     try {
       setEmergencyStatus('ALERT');
       setCurrentAlert("AI is calculating optimal route...");
-      await fetch('http://localhost:8000/analyze-traffic', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      await fetch(`${apiUrl}/analyze-traffic`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: json.stringify({
+        body: JSON.stringify({
           origin: "Bengaluru Palace",
           destination: "Manipal Hospital"
         })

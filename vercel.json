@@ -5,6 +5,10 @@
     "framework": "vite",
     "rewrites": [
         {
+            "source": "/api/(.*)",
+            "destination": "server/app/main.py"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }

@@ -1,8 +1,6 @@
 fastapi
 uvicorn
-python-dotenv
 google-generativeai
 googlemaps
-pydantic
+python-dotenv
 websockets
-python-multipart
