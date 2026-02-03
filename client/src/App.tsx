@@ -1,3 +1,4 @@
+// RouteLife AI - Main Application Component
 import { useState, useEffect } from 'react';
 import MapComponent from './components/MapComponent';
 import GlassCard from './components/GlassCard';
